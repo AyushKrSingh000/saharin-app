@@ -19,6 +19,9 @@ class _MainPageState extends ConsumerState<MainPage> {
     return AutoTabsScaffold(
       routes: const [
         HomeTabRoute(),
+        ActiveLoansTabRoute(),
+        PlansTabRoute(),
+        ProfileTabeRoute(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) => BottomBar(
         key: ValueKey(tabsRouter.activeIndex),

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:saharin/src/constants/colors.dart';
 import 'package:saharin/src/ui/home_tab/home_tab_page_model.dart';
 import 'package:saharin/src/ui/home_tab/widgets/best_offer_card.dart';

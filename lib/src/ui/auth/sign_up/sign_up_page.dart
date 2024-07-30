@@ -189,24 +189,25 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     borderColor: Colors.white.withOpacity(.6),
                     isProcessing: isProcessing,
                     onTap: () async {
-                      if (!isProcessing) {
-                        if (mounted) {
-                          setState(() {
-                            isProcessing = true;
-                          });
-                        }
-                        // final res = await ref
-                        //     .read(signUpPageModelProvider.notifier)
-                        //     .loginUser(checkBox: checkBox);
-                        // if (res != '') {
-                        //   showErrorMessage(res);
-                        // }
-                        if (mounted) {
-                          setState(() {
-                            isProcessing = false;
-                          });
-                        }
-                      }
+                      context.replaceRoute(const MainRoute());
+                      // if (!isProcessing) {
+                      //   if (mounted) {
+                      //     setState(() {
+                      //       isProcessing = true;
+                      //     });
+                      //   }
+                      //   // final res = await ref
+                      //   //     .read(signUpPageModelProvider.notifier)
+                      //   //     .loginUser(checkBox: checkBox);
+                      //   // if (res != '') {
+                      //   //   showErrorMessage(res);
+                      //   // }
+                      //   if (mounted) {
+                      //     setState(() {
+                      //       isProcessing = false;
+                      //     });
+                      //   }
+                      // }
                     },
                     text: 'Continue',
                   ),

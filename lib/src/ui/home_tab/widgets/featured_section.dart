@@ -38,16 +38,16 @@ class _FeaturedPlansSectionState extends ConsumerState<FeaturedPlansSection> {
           height: 10,
         ),
         PlanCard(
-          imageString: 'assets/images/ic_logo.png',
-          planName: "Career Plus 2",
+          imageString: 'assets/images/ic_plan1.png',
+          planName: "Max Life",
           amount: '5',
         ),
         SizedBox(
           height: 10,
         ),
         PlanCard(
-          imageString: 'assets/images/ic_logo.png',
-          planName: "Career Plus 2",
+          imageString: 'assets/images/ic_plan2.png',
+          planName: "Active fit Plus",
           amount: '5',
         ),
         SizedBox(

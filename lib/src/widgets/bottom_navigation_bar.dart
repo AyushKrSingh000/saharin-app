@@ -66,31 +66,23 @@ class _BottomBarState extends ConsumerState<BottomBar> {
                           },
                         ),
                         _NavigationBarItem(
-                          label: 'Claims',
-                          icon: Icons.flag_outlined,
-                          index: 1,
-                          isActive: context.tabsRouter.activeIndex == 1,
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            // context.tabsRouter.setActiveIndex(1);
-
-                            // if (mounted) {
-                            setState(() {});
-                            // }/
-                          },
-                        ),
-                        _NavigationBarItem(
-                          label: 'Policies',
+                          label: 'Plans',
                           index: 2,
                           icon: Icons.policy_outlined,
                           isActive: context.tabsRouter.activeIndex == 2,
                           onTap: () {
                             FocusScope.of(context).unfocus();
-                            // context.tabsRouter.setActiveIndex(2);
-
-                            // if (mounted) {
-                            setState(() {});
-                            // }
+                            context.tabsRouter.setActiveIndex(2);
+                          },
+                        ),
+                        _NavigationBarItem(
+                          label: 'Loans',
+                          icon: Icons.flag_outlined,
+                          index: 1,
+                          isActive: context.tabsRouter.activeIndex == 1,
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            context.tabsRouter.setActiveIndex(1);
                           },
                         ),
                         _NavigationBarItem(
@@ -100,10 +92,8 @@ class _BottomBarState extends ConsumerState<BottomBar> {
                           isActive: context.tabsRouter.activeIndex == 3,
                           onTap: () {
                             FocusScope.of(context).unfocus();
-                            if (mounted) {
-                              setState(() {});
-                            }
-                            // context.tabsRouter.setActiveIndex(3);
+
+                            context.tabsRouter.setActiveIndex(3);
                           },
                         ),
                       ],

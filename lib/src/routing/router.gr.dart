@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ActiveLoansTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ActiveLoansTabPage(),
+      );
+    },
     HomeTabRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -27,10 +33,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MainPage(),
       );
     },
+    PlansTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PlansTabPage(),
+      );
+    },
     PrivacyPolicyRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const PrivacyPolicyPage(),
+      );
+    },
+    ProfileTabeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileTabePage(),
       );
     },
     SignInRoute.name: (routeData) {
@@ -67,6 +85,20 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [ActiveLoansTabPage]
+class ActiveLoansTabRoute extends PageRouteInfo<void> {
+  const ActiveLoansTabRoute({List<PageRouteInfo>? children})
+      : super(
+          ActiveLoansTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ActiveLoansTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [HomeTabPage]
 class HomeTabRoute extends PageRouteInfo<void> {
   const HomeTabRoute({List<PageRouteInfo>? children})
@@ -95,6 +127,20 @@ class MainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PlansTabPage]
+class PlansTabRoute extends PageRouteInfo<void> {
+  const PlansTabRoute({List<PageRouteInfo>? children})
+      : super(
+          PlansTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PlansTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [PrivacyPolicyPage]
 class PrivacyPolicyRoute extends PageRouteInfo<void> {
   const PrivacyPolicyRoute({List<PageRouteInfo>? children})
@@ -104,6 +150,20 @@ class PrivacyPolicyRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'PrivacyPolicyRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileTabePage]
+class ProfileTabeRoute extends PageRouteInfo<void> {
+  const ProfileTabeRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileTabeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileTabeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

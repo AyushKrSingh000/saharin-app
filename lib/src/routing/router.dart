@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../ui/active_loans_tab/active_loans_tab.dart';
 import '../ui/auth/sign_in/signin_page.dart';
 import '../ui/auth/sign_up/sign_up_page.dart';
 import '../ui/auth/tnc/privacy_policy_page.dart';
@@ -9,6 +10,8 @@ import '../ui/auth/tnc/tnc_page.dart';
 import '../ui/auth/welcome/welcome_page.dart';
 import '../ui/home_tab/home_tab_page.dart';
 import '../ui/main/main_page.dart';
+import '../ui/plans_tab/plans_tab.dart';
+import '../ui/profile_tab/profile_tab.dart';
 import '../ui/splash/splash_page.dart';
 
 part 'router.gr.dart';
@@ -55,6 +58,18 @@ class AppRouter extends _$AppRouter {
       AutoRoute(
         page: HomeTabRoute.page,
         path: "home_tab",
+      ),
+      AutoRoute(
+        page: ActiveLoansTabRoute.page,
+        path: "user_loans",
+      ),
+      AutoRoute(
+        page: PlansTabRoute.page,
+        path: "plans",
+      ),
+      AutoRoute(
+        page: ProfileTabeRoute.page,
+        path: "profile",
       ),
     ]),
   ];

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saharin/src/widgets/custom_button.dart';
 
 class PlanCard extends ConsumerWidget {
+  final bool isActiveLoan;
   final String imageString;
   final String planName;
   final String amount;
@@ -11,6 +12,7 @@ class PlanCard extends ConsumerWidget {
     required this.amount,
     required this.imageString,
     required this.planName,
+    this.isActiveLoan = false,
   });
 
   @override
@@ -24,20 +26,20 @@ class PlanCard extends ConsumerWidget {
             width: 10,
           ),
           Image.asset(
-            'assets/images/ic_logo.png',
+            imageString,
             width: 80,
           ),
           const SizedBox(
             width: 10,
           ),
-          const Expanded(
+          Expanded(
             flex: 3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Care Supreme",
-                  maxLines: 1,
+                  planName,
+                  maxLines: 2,
                 ),
               ],
             ),
@@ -48,8 +50,8 @@ class PlanCard extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Cover Amount",
+                Text(
+                  isActiveLoan ? "Your loan" : "Get Loan Upto",
                   maxLines: 1,
                 ),
                 Text(
@@ -76,6 +78,9 @@ class PlanCard extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+          const SizedBox(
+            width: 5,
           ),
         ],
       ),
