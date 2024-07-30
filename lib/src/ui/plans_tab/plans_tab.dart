@@ -83,6 +83,7 @@ class _PlansTabPageState extends ConsumerState<PlansTabPage> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: PlanCard(
+                        premium: "",
                         amount: (index + 1).toString(),
                         imageString:
                             'assets/images/ic_plan${(index % 2) + 1}.png',

@@ -7,8 +7,10 @@ class PlanCard extends ConsumerWidget {
   final String imageString;
   final String planName;
   final String amount;
+  final String premium;
   const PlanCard({
     super.key,
+    required this.premium,
     required this.amount,
     required this.imageString,
     required this.planName,
@@ -50,8 +52,8 @@ class PlanCard extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  isActiveLoan ? "Your loan" : "Get Loan Upto",
+                const Text(
+                  "Cover amount",
                   maxLines: 1,
                 ),
                 Text(
@@ -70,7 +72,7 @@ class PlanCard extends ConsumerWidget {
                     CustomButton(
                       width: 80,
                       height: 30,
-                      text: 'View',
+                      text: '$premium/month',
                       onTap: () {},
                       isProcessing: false,
                     ),

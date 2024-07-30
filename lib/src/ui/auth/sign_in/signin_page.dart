@@ -34,7 +34,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   bool isProcessing = false;
   bool isFbProcessing = false;
   bool isNotVisible = true;
-  // bool isFirstTimeTap = true;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(signInPageModelProvider, (prev, next) {});
@@ -91,7 +91,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     height: 10,
                   ),
                   const Text(
-                    "Log In as loan seeker",
+                    "Log In as Community",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
@@ -192,25 +192,26 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     borderColor: Colors.white.withOpacity(.6),
                     isProcessing: isProcessing,
                     onTap: () async {
-                      context.replaceRoute(const MainRoute());
-                      // if (!isProcessing) {
-                      //   if (mounted) {
-                      //     setState(() {
-                      //       isProcessing = true;
-                      //     });
-                      //   }
-                      //   final res = await ref
-                      //       .read(signInPageModelProvider.notifier)
-                      //       .loginUser(checkBox: checkBox);
-                      //   if (res != '') {
-                      //     showErrorMessage(res);
-                      //   }
-                      //   if (mounted) {
-                      //     setState(() {
-                      //       isProcessing = false;
-                      //     });
-                      //   }
-                      // }
+                      if (!isProcessing) {
+                        if (mounted) {
+                          setState(() {
+                            isProcessing = true;
+                          });
+                        }
+                        final data = ref.read(
+                            signInPageModelProvider.select((value) => value));
+                        final res = await ref
+                            .read(authRepositoryProvider.notifier)
+                            .loginSHGUser(data.email, data.password);
+                        if (res != '') {
+                          showErrorMessage(res);
+                        }
+                        if (mounted) {
+                          setState(() {
+                            isProcessing = false;
+                          });
+                        }
+                      }
                     },
                     text: 'Continue',
                   ),
@@ -221,7 +222,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "Are you a loan provider?",
+                        "Are you a service provider?",
                         style: TextStyle(
                           fontFamily: Fonts.helvtica,
                           color: Colors.black,

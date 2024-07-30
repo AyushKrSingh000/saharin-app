@@ -2,6 +2,8 @@
 
 // 🌎 Project imports:
 
+import 'package:saharin/src/models/insurance_plan_data/insurance_plan_data.dart';
+import 'package:saharin/src/models/insurance_provider_data/insurance_provider_data.dart';
 import 'package:saharin/src/models/requests/send_email_otp_request.dart';
 import 'package:saharin/src/models/requests/user_login_request.dart';
 import 'package:saharin/src/models/requests/user_logout_request.dart';
@@ -60,20 +62,19 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<ApiResponse<UserData>> loginUser({
+  Future<ApiResponse<UserData>> loginSHGUser({
     required UserLoginRequest userLoginRequest,
   }) async {
     try {
-      final response = await _authApiClient.loginUser(
+      final response = await _authApiClient.loginSHGUser(
         userLoginRequest: userLoginRequest,
       ) as Map<String, dynamic>;
 
-      if (response['status'] == false) {
-        return ApiResponse<UserData>.error(
-            response['message'] ?? "Something Went Wrong!");
+      if (response['status'] != 'success') {
+        return ApiResponse<UserData>.error("Something Went Wrong!");
       }
-
-      return ApiResponse<UserData>.success(UserData.fromJson(response['data']));
+      print(response);
+      return ApiResponse<UserData>.success(UserData.fromJson(response));
     } on DioException catch (e) {
       final hasInternet = await hasInternetAccess();
       if (!hasInternet) {
@@ -85,17 +86,16 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<ApiResponse<String>> sendOtp({
-    required SendEmailOtpRequest sendEmailOtpRequest,
+  Future<ApiResponse<UserData>> loginInsuranceProvider({
+    required UserLoginRequest userLoginRequest,
   }) async {
     try {
-      final response = await _authApiClient.sendEmailOtp(
-          sendEmailOtpRequest: sendEmailOtpRequest) as Map<String, dynamic>;
-      if (response['status'] == false) {
-        return ApiResponse.error(
-            response['message'] ?? "Something Went Wrong!");
-      } else if (response['status'] == true) {
-        return ApiResponse.success(response['message']);
+      final response = await _authApiClient.loginInsuranceProvider(
+          userLoginRequest: userLoginRequest) as Map<String, dynamic>;
+      if (response['status'] != 'success') {
+        return ApiResponse.error("Something Went Wrong!");
+      } else if (response['status'] == 'success') {
+        return ApiResponse.success(UserData.fromJson(response));
       } else {
         return ApiResponse.error('Something Went Wrong');
       }
@@ -110,78 +110,46 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<ApiResponse<String>> updateEmailOtp({
-    required SendEmailOtpRequest sendEmailOtpRequest,
-  }) async {
-    try {
-      final response = await _authApiClient.updateEmailOtp(
-          sendEmailOtpRequest: sendEmailOtpRequest) as Map<String, dynamic>;
-      if (response['status'] == false) {
-        return ApiResponse.error(
-            response['message'] ?? "Something Went Wrong!");
-      } else if (response['status'] == true) {
-        return ApiResponse.success("");
-      } else {
-        return ApiResponse.error('Something Went Wrong');
-      }
-    } on DioException catch (e) {
-      final hasInternet = await hasInternetAccess();
-      if (!hasInternet) {
-        return ApiResponse.noInternet();
-      }
-      return ApiResponse.error(
-          e.response?.data['message'] ?? "Something Went Wrong!!!");
-    }
-  }
-
-  @override
-  Future<ApiResponse<String>> verifyOtp({
-    required SendEmailOtpRequest sendEmailOtpRequest,
-  }) async {
-    try {
-      final response = await _authApiClient.verifyOtp(
-          sendEmailOtpRequest: sendEmailOtpRequest) as Map<String, dynamic>;
-      if (response['status'] == false) {
-        return ApiResponse.error(
-            response['message'] ?? "Something Went Wrong!");
-      } else if (response['status'] == true) {
-        return ApiResponse.success("");
-      } else {
-        return ApiResponse.error('Something Went Wrong');
-      }
-    } on DioException catch (e) {
-      final hasInternet = await hasInternetAccess();
-      if (!hasInternet) {
-        return ApiResponse.noInternet();
-      }
-      return ApiResponse.error(
-          e.response?.data['message'] ?? "Something Went Wrong!!!");
-    }
-  }
-
-  @override
-  Future<ApiResponse<UserLoggedData>> fetchUserDetails({
+  Future<ApiResponse<List<InsurancePlanData>>> getAllInsurances({
     required String token,
   }) async {
     try {
-      final response = await _authApiClient.fetchUserDetails(
-        token: token,
-      ) as Map<String, dynamic>;
+      final response = await _authApiClient.getAllInsurance(
+          token: 'Bearer $token') as Map<String, dynamic>;
 
-      if (response['status'] == false) {
-        return ApiResponse<UserLoggedData>.error(
-            response['message'] ?? "Something Went Wrong!");
-      }
-
-      return ApiResponse<UserLoggedData>.success(
-          UserLoggedData.fromJson(response['data']));
+      return ApiResponse.success((response['insurancePlans'] as List)
+          .map((e) => InsurancePlanData.fromJson(e))
+          .toList());
     } on DioException catch (e) {
       final hasInternet = await hasInternetAccess();
       if (!hasInternet) {
         return ApiResponse.noInternet();
       }
       return ApiResponse.error(
-          e.response?.data['message'] ?? "Something Went Wrong");
+          e.response?.data['message'] ?? "Something Went Wrong!!!");
+    }
+  }
+
+  @override
+  Future<ApiResponse<List<InsuranceProviderData>>> getAllInsuranceProvider({
+    required String token,
+  }) async {
+    try {
+      final response = await _authApiClient.getAllInsuranceProvider(
+        token: 'Bearer $token',
+      ) as Map<String, dynamic>;
+
+      return ApiResponse<List<InsuranceProviderData>>.success(
+          (response['insuranceProviders'] as List)
+              .map((e) => InsuranceProviderData.fromJson(e))
+              .toList());
+    } on DioException catch (e) {
+      final hasInternet = await hasInternetAccess();
+      if (!hasInternet) {
+        return ApiResponse.noInternet();
+      }
+      print(e.response?.data.toString());
+      return ApiResponse.error("Something Went Wrong");
     }
   }
 

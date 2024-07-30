@@ -24,9 +24,9 @@ class _SplashPageState extends ConsumerState<SplashPage>
       if (next.status == AuthStatus.authenticated) {
         context.replaceRoute(const MainRoute());
       } else if (next.status == AuthStatus.authenticatedNotVerified) {
-        context.replaceRoute(const MainRoute());
+        context.replaceRoute(const SignInRoute());
       } else if (next.status == AuthStatus.unauthenticated) {
-        context.replaceRoute(const MainRoute());
+        context.replaceRoute(const SignInRoute());
       }
     });
     return Scaffold(

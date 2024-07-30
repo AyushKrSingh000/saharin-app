@@ -17,6 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomeTabPageState {
   String get errorMessage => throw _privateConstructorUsedError;
+  List<InsurancePlanData> get insuranceData =>
+      throw _privateConstructorUsedError;
+  List<InsuranceProviderData> get insuranceProviders =>
+      throw _privateConstructorUsedError;
   HomePageStatus get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +34,11 @@ abstract class $HomeTabPageStateCopyWith<$Res> {
           HomeTabPageState value, $Res Function(HomeTabPageState) then) =
       _$HomeTabPageStateCopyWithImpl<$Res, HomeTabPageState>;
   @useResult
-  $Res call({String errorMessage, HomePageStatus status});
+  $Res call(
+      {String errorMessage,
+      List<InsurancePlanData> insuranceData,
+      List<InsuranceProviderData> insuranceProviders,
+      HomePageStatus status});
 }
 
 /// @nodoc
@@ -47,6 +55,8 @@ class _$HomeTabPageStateCopyWithImpl<$Res, $Val extends HomeTabPageState>
   @override
   $Res call({
     Object? errorMessage = null,
+    Object? insuranceData = null,
+    Object? insuranceProviders = null,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
@@ -54,6 +64,14 @@ class _$HomeTabPageStateCopyWithImpl<$Res, $Val extends HomeTabPageState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      insuranceData: null == insuranceData
+          ? _value.insuranceData
+          : insuranceData // ignore: cast_nullable_to_non_nullable
+              as List<InsurancePlanData>,
+      insuranceProviders: null == insuranceProviders
+          ? _value.insuranceProviders
+          : insuranceProviders // ignore: cast_nullable_to_non_nullable
+              as List<InsuranceProviderData>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -70,7 +88,11 @@ abstract class _$$HomeTabPageStateImplCopyWith<$Res>
       __$$HomeTabPageStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String errorMessage, HomePageStatus status});
+  $Res call(
+      {String errorMessage,
+      List<InsurancePlanData> insuranceData,
+      List<InsuranceProviderData> insuranceProviders,
+      HomePageStatus status});
 }
 
 /// @nodoc
@@ -85,6 +107,8 @@ class __$$HomeTabPageStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? errorMessage = null,
+    Object? insuranceData = null,
+    Object? insuranceProviders = null,
     Object? status = null,
   }) {
     return _then(_$HomeTabPageStateImpl(
@@ -92,6 +116,14 @@ class __$$HomeTabPageStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      insuranceData: null == insuranceData
+          ? _value._insuranceData
+          : insuranceData // ignore: cast_nullable_to_non_nullable
+              as List<InsurancePlanData>,
+      insuranceProviders: null == insuranceProviders
+          ? _value._insuranceProviders
+          : insuranceProviders // ignore: cast_nullable_to_non_nullable
+              as List<InsuranceProviderData>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -104,18 +136,42 @@ class __$$HomeTabPageStateImplCopyWithImpl<$Res>
 
 class _$HomeTabPageStateImpl implements _HomeTabPageState {
   const _$HomeTabPageStateImpl(
-      {this.errorMessage = '', this.status = HomePageStatus.initial});
+      {this.errorMessage = '',
+      final List<InsurancePlanData> insuranceData = const [],
+      final List<InsuranceProviderData> insuranceProviders = const [],
+      this.status = HomePageStatus.initial})
+      : _insuranceData = insuranceData,
+        _insuranceProviders = insuranceProviders;
 
   @override
   @JsonKey()
   final String errorMessage;
+  final List<InsurancePlanData> _insuranceData;
+  @override
+  @JsonKey()
+  List<InsurancePlanData> get insuranceData {
+    if (_insuranceData is EqualUnmodifiableListView) return _insuranceData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_insuranceData);
+  }
+
+  final List<InsuranceProviderData> _insuranceProviders;
+  @override
+  @JsonKey()
+  List<InsuranceProviderData> get insuranceProviders {
+    if (_insuranceProviders is EqualUnmodifiableListView)
+      return _insuranceProviders;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_insuranceProviders);
+  }
+
   @override
   @JsonKey()
   final HomePageStatus status;
 
   @override
   String toString() {
-    return 'HomeTabPageState(errorMessage: $errorMessage, status: $status)';
+    return 'HomeTabPageState(errorMessage: $errorMessage, insuranceData: $insuranceData, insuranceProviders: $insuranceProviders, status: $status)';
   }
 
   @override
@@ -125,11 +181,20 @@ class _$HomeTabPageStateImpl implements _HomeTabPageState {
             other is _$HomeTabPageStateImpl &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            const DeepCollectionEquality()
+                .equals(other._insuranceData, _insuranceData) &&
+            const DeepCollectionEquality()
+                .equals(other._insuranceProviders, _insuranceProviders) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, errorMessage, status);
+  int get hashCode => Object.hash(
+      runtimeType,
+      errorMessage,
+      const DeepCollectionEquality().hash(_insuranceData),
+      const DeepCollectionEquality().hash(_insuranceProviders),
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -142,10 +207,16 @@ class _$HomeTabPageStateImpl implements _HomeTabPageState {
 abstract class _HomeTabPageState implements HomeTabPageState {
   const factory _HomeTabPageState(
       {final String errorMessage,
+      final List<InsurancePlanData> insuranceData,
+      final List<InsuranceProviderData> insuranceProviders,
       final HomePageStatus status}) = _$HomeTabPageStateImpl;
 
   @override
   String get errorMessage;
+  @override
+  List<InsurancePlanData> get insuranceData;
+  @override
+  List<InsuranceProviderData> get insuranceProviders;
   @override
   HomePageStatus get status;
   @override

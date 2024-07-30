@@ -7,48 +7,37 @@ part of 'user_data.dart';
 // **************************************************************************
 
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
-      userData:
-          UserLoggedData.fromJson(json['userData'] as Map<String, dynamic>),
+      data: UserDataa.fromJson(json['data'] as Map<String, dynamic>),
       token: json['token'] as String,
-      time: json['time'] as String,
     );
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
-      'userData': instance.userData,
+      'data': instance.data,
       'token': instance.token,
-      'time': instance.time,
+    };
+
+UserDataa _$UserDataaFromJson(Map<String, dynamic> json) => UserDataa(
+      user: UserLoggedData.fromJson(json['user'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UserDataaToJson(UserDataa instance) => <String, dynamic>{
+      'user': instance.user,
     };
 
 UserLoggedData _$UserLoggedDataFromJson(Map<String, dynamic> json) =>
     UserLoggedData(
-      fullName: json['full_name'] as String,
-      phone: json['phone'] as String?,
+      email: json['email'] as String,
+      password: json['password'] as String,
+      fullName: json['name'] as String?,
       id: json['_id'] as String,
-      email: json['email'] as String?,
-      profilePic: json['profile_pic'] as String?,
-      isEmailVerified: (json['is_email_verified'] as num).toInt(),
-      isPhoneVerified: (json['is_phone_verified'] as num).toInt(),
-      zipCode: json['zip_code'] as String?,
-      fbLink: json['fb_link'] as String?,
-      instaLink: json['insta_link'] as String?,
-      city: json['city'] as String?,
-      state: json['state'] as String?,
-      loginSource: json['login_source'] as String,
+      type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$UserLoggedDataToJson(UserLoggedData instance) =>
     <String, dynamic>{
-      'full_name': instance.fullName,
-      'phone': instance.phone,
+      'name': instance.fullName,
       'email': instance.email,
-      'profile_pic': instance.profilePic,
-      'is_email_verified': instance.isEmailVerified,
-      'is_phone_verified': instance.isPhoneVerified,
-      'zip_code': instance.zipCode,
-      'fb_link': instance.fbLink,
-      'insta_link': instance.instaLink,
-      'city': instance.city,
-      'state': instance.state,
-      'login_source': instance.loginSource,
+      'password': instance.password,
+      'type': instance.type,
       '_id': instance.id,
     };

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:saharin/src/routing/router.dart';
+import 'package:saharin/src/logic/repositories/auth_repository.dart';
 
 import '../../constants/fonts.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -82,24 +82,10 @@ class _ProfileTabePageState extends ConsumerState<ProfileTabePage> {
               const SizedBox(height: 20),
               ProfileContainer(
                 onTap: () async {
-                  context.replaceRoute(const WelcomeRoute());
-                  // if (!isProcessing) {
-                  //   if (mounted) {
-                  //     setState(() {
-                  //       isProcessing = true;
-                  //     });
-                  //   }
-                  //   final res =
-                  //       await ref.read(authRepositoryProvider.notifier).logOut();
-                  //   if (res != '') {
-                  //     debugPrint(res);
-                  //   }
-                  //   if (mounted) {
-                  //     setState(() {
-                  //       isProcessing = false;
-                  //     });
-                  //   }
-                  // }
+                  ref.read(authRepositoryProvider.notifier).updateUser(null);
+                  ref
+                      .read(authRepositoryProvider.notifier)
+                      .changeState(AuthStatus.unauthenticated);
                 },
                 subtitle: 'Log out of your current account',
                 title: 'Logout',

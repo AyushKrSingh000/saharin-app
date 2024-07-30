@@ -4,6 +4,8 @@ import 'package:saharin/src/models/user_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/api_response.dart';
+import '../../../models/insurance_plan_data/insurance_plan_data.dart';
+import '../../../models/insurance_provider_data/insurance_provider_data.dart';
 import '../../../models/requests/social_login_request.dart';
 import '../../../models/requests/user_logout_request.dart';
 import '../../../models/user_register_data.dart';
@@ -18,16 +20,16 @@ abstract class ApiService {
   Future<ApiResponse<UserData>> registerUser({
     required UserRegisterData userData,
   });
-  Future<ApiResponse<UserData>> loginUser({
+  Future<ApiResponse<UserData>> loginSHGUser({
     required UserLoginRequest userLoginRequest,
   });
-  Future<ApiResponse<String>> sendOtp({
-    required SendEmailOtpRequest sendEmailOtpRequest,
+  Future<ApiResponse<UserData>> loginInsuranceProvider({
+    required UserLoginRequest userLoginRequest,
   });
-  Future<ApiResponse<String>> updateEmailOtp({
-    required SendEmailOtpRequest sendEmailOtpRequest,
+  Future<ApiResponse<List<InsurancePlanData>>> getAllInsurances({
+    required String token,
   });
-  Future<ApiResponse<UserLoggedData>> fetchUserDetails({
+  Future<ApiResponse<List<InsuranceProviderData>>> getAllInsuranceProvider({
     required String token,
   });
   Future<ApiResponse<UserData>> socialLogin({
@@ -40,9 +42,6 @@ abstract class ApiService {
     required SendEmailOtpRequest sendEmailOtpRequest,
   });
 
-  Future<ApiResponse<String>> verifyOtp({
-    required SendEmailOtpRequest sendEmailOtpRequest,
-  });
   Future<ApiResponse<String>> logOut({
     required UserLogoutRequest userLogoutRequest,
   });

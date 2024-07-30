@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:saharin/src/models/requests/user_logout_request.dart';
 import 'package:saharin/src/utils/toast_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../models/api_response.dart';
 import '../../models/requests/user_login_request.dart';
@@ -39,8 +35,10 @@ class AuthRepository extends StateNotifier<AuthState> {
   }) : super(const AuthState()) {
     fetchUserDetails();
   }
-  updateUser(UserData? userData) => state =
-      state.copyWith(authUser: userData, email: userData?.userData.email);
+  updateUser(UserData? userData) => state = state.copyWith(
+      authUser: userData,
+      email: userData?.data.user.email,
+      idToken: userData?.token);
 
   fetchUserDetails() async {
     if (!await hasInternetAccess()) {
@@ -48,105 +46,66 @@ class AuthRepository extends StateNotifier<AuthState> {
       state = state.copyWith(status: AuthStatus.unauthenticated);
       return;
     }
-    final token = ref
-        .read(sharedPreferencesProvider)
-        .getString(PreferenceService.authToken);
-    if (token == null) {
-      state = state.copyWith(status: AuthStatus.unauthenticated);
-      return;
-    } else {
-      debugPrint(token);
-      final res = await apiService.fetchUserDetails(token: token);
-      if (res.status != ApiStatus.success) {
-        state = state.copyWith(status: AuthStatus.unauthenticated);
-        return;
-      } else {
-        state = state.copyWith(
-            authUser: UserData(userData: res.data!, token: token, time: '24h'));
-        state = state.copyWith(status: AuthStatus.authenticated);
-      }
-    }
+    state = state.copyWith(status: AuthStatus.unauthenticated);
   }
 
-  Future<String> logOut() async {
-    if (!await hasInternetAccess()) {
-      return "No Internet Connection!";
-    }
-    try {
-      final deviceId = await getId();
-      final res = await apiService.logOut(
-          userLogoutRequest: UserLogoutRequest(
-              deviceId: deviceId, id: state.authUser?.userData.id ?? ""));
-      if (res.status != ApiStatus.success) {
-        return res.errorMessage ?? "Something Went Wrong!!!";
-      }
-      ref
-          .read(sharedPreferencesProvider)
-          .setString(PreferenceService.authToken, "");
-      GoogleSignIn().disconnect();
-      state = state.copyWith(
-          authUser: null,
-          status: AuthStatus.unauthenticated,
-          email: null,
-          password: null);
-      return "";
-    } catch (e) {
-      state = state.copyWith(
-          authUser: null,
-          status: AuthStatus.unauthenticated,
-          email: null,
-          password: null);
-      ref
-          .read(sharedPreferencesProvider)
-          .setString(PreferenceService.authToken, "");
-      GoogleSignIn().disconnect();
-      changeState(AuthStatus.unauthenticated);
-      return e.toString();
-    }
-  }
-
-  Future<String> loginUser() async {
+  Future<String> loginSHGUser(String email, String password) async {
     try {
       if (!await hasInternetAccess()) {
         return "No Internet Connection";
       }
       String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
       RegExp regex = RegExp(emailPattern);
-      if (!regex.hasMatch(state.email ?? "")) {
+      if (!regex.hasMatch(email)) {
         return "Please enter valid email";
       }
-      final deviceId = await getId();
-      final res = await apiService.loginUser(
+
+      final res = await apiService.loginSHGUser(
           userLoginRequest: UserLoginRequest(
-              email: state.email!,
-              password: state.password!,
-              fcmToken: '*',
-              deviceId: deviceId,
-              os: Platform.isAndroid ? 'android' : "ios"));
+        email: email.trim(),
+        password: password.trim(),
+      ));
 
       if (res.status != ApiStatus.success) {
-        if (mounted) {
-          if (res.errorMessage == 'Email not verified') {
-            ref
-                .read(authRepositoryProvider.notifier)
-                .changeState(AuthStatus.authenticatedNotVerified);
-            return "";
-          }
-          return res.errorMessage ?? "Something Went Wrong";
-        }
+        return res.errorMessage ?? "Something Went Wrong";
       } else {
-        state = state.copyWith(authUser: res.data);
-        if (state.checkbox) {
-          ref
-              .read(sharedPreferencesProvider)
-              .setString(PreferenceService.authToken, res.data?.token ?? "");
+        if (mounted) {
+          state = state.copyWith(
+            authUser: res.data,
+            idToken: res.data!.token,
+            status: AuthStatus.authenticated,
+          );
         }
-        if (res.data?.userData.isEmailVerified != 0) {
+      }
+      return '';
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> loginProvider(String email, String password) async {
+    try {
+      if (!await hasInternetAccess()) {
+        return "No Internet Connection";
+      }
+      // String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+      // // RegExp regex = RegExp(emailPattern);
+      // // if (!regex.hasMatch(email ?? "")) {
+      // //   return "Please enter valid email";
+      // // }
+      final res = await apiService.loginInsuranceProvider(
+          userLoginRequest: UserLoginRequest(
+        email: email.trim(),
+        password: password.trim(),
+      ));
+
+      if (res.status != ApiStatus.success) {
+        return res.errorMessage ?? "Something Went Wrong";
+      } else {
+        if (mounted) {
+          state = state.copyWith(authUser: res.data, idToken: res.data!.token);
           changeState(AuthStatus.authenticated);
-        } else {
-          changeState(AuthStatus.authenticatedNotVerified);
         }
-        return '';
       }
 
       return '';
@@ -154,11 +113,6 @@ class AuthRepository extends StateNotifier<AuthState> {
       ref
           .read(sharedPreferencesProvider)
           .setString(PreferenceService.authToken, "");
-      try {
-        GoogleSignIn().disconnect();
-      } catch (e) {
-        // return e.toString()
-      }
 
       return e.toString();
     }

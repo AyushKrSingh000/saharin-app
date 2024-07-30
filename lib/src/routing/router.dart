@@ -9,6 +9,7 @@ import '../ui/auth/tnc/tnc_page.dart';
 
 import '../ui/auth/welcome/welcome_page.dart';
 import '../ui/home_tab/home_tab_page.dart';
+import '../ui/loan_page/loan_page.dart';
 import '../ui/main/main_page.dart';
 import '../ui/plans_tab/plans_tab.dart';
 import '../ui/profile_tab/profile_tab.dart';
@@ -70,6 +71,10 @@ class AppRouter extends _$AppRouter {
       AutoRoute(
         page: ProfileTabeRoute.page,
         path: "profile",
+      ),
+      AutoRoute(
+        page: LoanRoute.page,
+        path: 'loan',
       ),
     ]),
   ];

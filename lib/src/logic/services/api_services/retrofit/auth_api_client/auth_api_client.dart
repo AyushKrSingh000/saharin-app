@@ -9,7 +9,7 @@ import '../../../../../models/requests/social_login_request.dart';
 
 part 'auth_api_client.g.dart';
 
-@RestApi(baseUrl: 'http://localhost:5000/')
+@RestApi(baseUrl: 'http://localhost:8000/')
 abstract class AuthApiClient {
   factory AuthApiClient(
     Dio dio, {
@@ -20,20 +20,20 @@ abstract class AuthApiClient {
   Future registerUser({
     @Body() required UserRegisterData userRegisterData,
   });
-  @POST('/auth/login')
-  Future loginUser({
+  @POST('/api/v1/selfHelpGroup/login')
+  Future loginSHGUser({
     @Body() required UserLoginRequest userLoginRequest,
   });
-  @POST('/auth/send_email_otp')
-  Future sendEmailOtp({
-    @Body() required SendEmailOtpRequest sendEmailOtpRequest,
+  @POST('api/v1/insuranceProvider/login')
+  Future loginInsuranceProvider({
+    @Body() required UserLoginRequest userLoginRequest,
   });
-  @POST('/auth/update_email_otp')
-  Future updateEmailOtp({
-    @Body() required SendEmailOtpRequest sendEmailOtpRequest,
+  @GET('/api/v1/selfHelpGroup/insurancePlans')
+  Future getAllInsurance({
+    @Header('jwt') required String token,
   });
-  @POST('/auth/get_user_from_token')
-  Future fetchUserDetails({
+  @GET('/api/v1/selfHelpGroup/insuranceProviders')
+  Future getAllInsuranceProvider({
     @Header('Authorization') required String token,
   });
   @POST('/auth/social_login')

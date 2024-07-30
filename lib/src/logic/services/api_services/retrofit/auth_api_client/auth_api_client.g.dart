@@ -13,7 +13,7 @@ class _AuthApiClient implements AuthApiClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:5000/';
+    baseUrl ??= 'http://localhost:8000/';
   }
 
   final Dio _dio;
@@ -49,7 +49,7 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<dynamic> loginUser(
+  Future<dynamic> loginSHGUser(
       {required UserLoginRequest userLoginRequest}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -63,7 +63,7 @@ class _AuthApiClient implements AuthApiClient {
     )
         .compose(
           _dio.options,
-          '/auth/login',
+          '/api/v1/selfHelpGroup/login',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -77,13 +77,13 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<dynamic> sendEmailOtp(
-      {required SendEmailOtpRequest sendEmailOtpRequest}) async {
+  Future<dynamic> loginInsuranceProvider(
+      {required UserLoginRequest userLoginRequest}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(sendEmailOtpRequest.toJson());
+    _data.addAll(userLoginRequest.toJson());
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'POST',
       headers: _headers,
@@ -91,7 +91,7 @@ class _AuthApiClient implements AuthApiClient {
     )
         .compose(
           _dio.options,
-          '/auth/send_email_otp',
+          'api/v1/insuranceProvider/login',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -105,21 +105,20 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<dynamic> updateEmailOtp(
-      {required SendEmailOtpRequest sendEmailOtpRequest}) async {
+  Future<dynamic> getAllInsurance({required String token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(sendEmailOtpRequest.toJson());
+    final _headers = <String, dynamic>{r'jwt': token};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'POST',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/auth/update_email_otp',
+          '/api/v1/selfHelpGroup/insurancePlans',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -133,20 +132,20 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<dynamic> fetchUserDetails({required String token}) async {
+  Future<dynamic> getAllInsuranceProvider({required String token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'POST',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/auth/get_user_from_token',
+          '/api/v1/selfHelpGroup/insuranceProviders',
           queryParameters: queryParameters,
           data: _data,
         )

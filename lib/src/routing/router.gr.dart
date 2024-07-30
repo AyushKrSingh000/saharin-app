@@ -27,6 +27,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeTabPage(),
       );
     },
+    LoanRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LoanPage(),
+      );
+    },
     MainRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -108,6 +114,20 @@ class HomeTabRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [LoanPage]
+class LoanRoute extends PageRouteInfo<void> {
+  const LoanRoute({List<PageRouteInfo>? children})
+      : super(
+          LoanRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoanRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

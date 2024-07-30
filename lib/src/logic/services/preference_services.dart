@@ -43,4 +43,5 @@ class PreferenceService {
   }
 
   static const authToken = 'auth_token';
+  static const userType = 'user_type';
 }

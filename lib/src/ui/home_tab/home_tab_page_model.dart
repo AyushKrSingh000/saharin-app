@@ -1,10 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:saharin/src/logic/repositories/auth_repository.dart';
+import 'package:saharin/src/models/insurance_plan_data/insurance_plan_data.dart';
+import 'package:saharin/src/models/insurance_provider_data/insurance_provider_data.dart';
 import 'package:saharin/src/utils/network_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../logic/services/api_services/api_service.dart';
+import '../../models/api_response.dart';
 
 part 'home_tab_page_model.freezed.dart';
 
@@ -28,6 +32,47 @@ class HomeTabPageModel extends StateNotifier<HomeTabPageState> {
       await init();
     });
   }
+  getInsuranceProviders() async {
+    try {
+      if (!await hasInternetAccess()) {
+        state = state.copyWith(
+          status: HomePageStatus.error,
+          insuranceData: [],
+          insuranceProviders: [],
+          errorMessage: "No Internet Connection!!!",
+        );
+        return;
+      }
+      final token =
+          ref.read(authRepositoryProvider.select((value) => value.idToken));
+
+      final res = await apiService.getAllInsuranceProvider(token: token!);
+      if (res.status != ApiStatus.success) {
+        state = state.copyWith(
+          status: HomePageStatus.error,
+          insuranceData: [],
+          insuranceProviders: [],
+          errorMessage: res.errorMessage ?? "Something Went Wrong!!!",
+        );
+      }
+
+      if (mounted) {
+        state = state.copyWith(
+          errorMessage: "",
+          status: HomePageStatus.loaded,
+          insuranceProviders: res.data ?? [],
+        );
+      }
+      return;
+    } catch (e) {
+      state = state.copyWith(
+        status: HomePageStatus.error,
+        insuranceData: [],
+        insuranceProviders: [],
+        errorMessage: e.toString(),
+      );
+    }
+  }
 
   init() async {
     state = state.copyWith(
@@ -38,217 +83,49 @@ class HomeTabPageModel extends StateNotifier<HomeTabPageState> {
       if (!await hasInternetAccess()) {
         state = state.copyWith(
           status: HomePageStatus.error,
+          insuranceData: [],
+          insuranceProviders: [],
           errorMessage: "No Internet Connection!!!",
         );
         return;
       }
-      // final res = await apiService.logOut();
-      // if (res.status != ApiStatus.success) {
-      //   state = state.copyWith(
-      //     status: HomePageStatus.error,
-      //     categoryData: null,
-      //     discountData: null,
-      //     featuredProducts: null,
-      //     errorMessage: res.errorMessage ?? "Something Went Wrong!!!",
-      //   );
+      final token =
+          ref.read(authRepositoryProvider.select((value) => value.idToken));
+      final res = await apiService.getAllInsurances(token: token!);
+      if (res.status != ApiStatus.success) {
+        state = state.copyWith(
+          status: HomePageStatus.error,
+          insuranceData: [],
+          insuranceProviders: [],
+          errorMessage: res.errorMessage ?? "Something Went Wrong!!!",
+        );
+      }
 
-      // }
-      // if (mounted) {
-      //   state = state.copyWith(
-      //     errorMessage: "",
-      //     categoryData: res.data!.values.first,
-      //   );
-      // await getFeaturedProduct();
-      // }
-      // return;
+      if (mounted) {
+        state = state.copyWith(
+          errorMessage: "",
+          insuranceData: res.data ?? [],
+        );
+      }
+      await getInsuranceProviders();
+      return;
     } catch (e) {
       state = state.copyWith(
         status: HomePageStatus.error,
+        insuranceData: [],
+        insuranceProviders: [],
         errorMessage: e.toString(),
       );
     }
   }
-
-  // getFeaturedProduct() async {
-  //   try {
-  //     if (!await hasInternetAccess()) {
-  //       state = state.copyWith(
-  //         status: HomePageStatus.error,
-  //         discountData: null,
-  //         categoryData: null,
-  //         trendingArtists: null,
-  //         featuredProducts: null,
-  //         errorMessage: "No Internet Connection!!!",
-  //       );
-  //       return;
-  //     }
-  //     final res = await apiService.getAllProduct(
-  //         getListDataRequest: const GetListDataRequest(
-  //       page: 1,
-  //       limit: 3,
-  //     ));
-  //     if (res.status != ApiStatus.success) {
-  //       state = state.copyWith(
-  //         status: HomePageStatus.error,
-  //         discountData: null,
-  //         categoryData: null,
-  //         trendingArtists: null,
-  //         featuredProducts: null,
-  //         errorMessage: res.errorMessage ?? "Something Went Wrong!!!",
-  //       );
-  //       return;
-  //     }
-  //     if (mounted) {
-  //       state = state.copyWith(
-  //         errorMessage: "",
-  //         featuredProducts: res.data!.values.first,
-  //       );
-  //       await getTrendingArtist();
-  //     }
-  //     return;
-  //   } catch (e) {
-  //     state = state.copyWith(
-  //       status: HomePageStatus.error,
-  //       discountData: null,
-  //       categoryData: null,
-  //       trendingArtists: null,
-  //       featuredProducts: null,
-  //       errorMessage: e.toString(),
-  //     );
-  //   }
-  // }
-
-  // getTrendingArtist() async {
-  //   // try {print
-
-  //   if (!await hasInternetAccess()) {
-  //     state = state.copyWith(
-  //       status: HomePageStatus.error,
-  //       discountData: null,
-  //       categoryData: null,
-  //       trendingArtists: null,
-  //       featuredProducts: null,
-  //       errorMessage: "No Internet Connection!!!",
-  //     );
-  //     return;
-  //   }
-  //   final res = await apiService.getAllArtists(
-  //       getListDataRequest: const GetListDataRequest(
-  //     page: 1,
-  //     limit: 2,
-  //   ));
-
-  //   if (res.status != ApiStatus.success) {
-  //     state = state.copyWith(
-  //       status: HomePageStatus.error,
-  //       discountData: null,
-  //       categoryData: null,
-  //       trendingArtists: null,
-  //       featuredProducts: null,
-  //       errorMessage: res.errorMessage ?? "Something Went Wrong!!!",
-  //     );
-  //     return;
-  //   }
-
-  //   List<ProductData> trendArtist = [];
-
-  //   for (ArtistData data in res.data!.values.first) {
-  //     final response = await apiService.getAllProduct(
-  //         getListDataRequest: GetListDataRequest(
-  //       artistId: data.id,
-  //       page: 1,
-  //       limit: 1,
-  //     ));
-  //     if (response.status != ApiStatus.success) {
-  //       state = state.copyWith(
-  //         status: HomePageStatus.error,
-  //         discountData: null,
-  //         categoryData: null,
-  //         trendingArtists: null,
-  //         featuredProducts: null,
-  //         errorMessage: res.errorMessage ?? "Something Went Wrong!!!",
-  //       );
-  //       return;
-  //     }
-  //     if (mounted) {
-  //       trendArtist.add(response.data!.values.first.first);
-  //     }
-  //   }
-  //   if (mounted) {
-  //     state = state.copyWith(
-  //       status: HomePageStatus.loaded,
-  //       errorMessage: "",
-  //       trendingArtists: trendArtist,
-  //     );
-  //     await getDiscount();
-  //   }
-  //   return;
-  //   // } catch (e) {
-  //   //   state = state.copyWith(
-  //   //     status: HomePageStatus.error,
-  //   //     discountData: null,
-  //   //     categoryData: null,
-  //   //     trendingArtists: null,
-  //   //     featuredProducts: null,
-  //   //     errorMessage: e.toString(),
-  //   //   );
-  //   // }
-  // }
-
-  // getDiscount() async {
-  //   try {
-  //     if (!await hasInternetAccess()) {
-  //       state = state.copyWith(
-  //         status: HomePageStatus.error,
-  //         discountData: null,
-  //         categoryData: null,
-  //         trendingArtists: null,
-  //         featuredProducts: null,
-  //         errorMessage: "No Internet Connection!!!",
-  //       );
-  //       return;
-  //     }
-  //     final res = await apiService.getAllDiscount(
-  //         getListDataRequest: const GetListDataRequest(
-  //       page: 1,
-  //       limit: 5,
-  //     ));
-  //     if (res.status != ApiStatus.success) {
-  //       state = state.copyWith(
-  //         status: HomePageStatus.error,
-  //         discountData: null,
-  //         categoryData: null,
-  //         trendingArtists: null,
-  //         featuredProducts: null,
-  //         errorMessage: res.errorMessage ?? "Something Went Wrong!!!",
-  //       );
-  //       return;
-  //     }
-  //     if (mounted) {
-  //       state = state.copyWith(
-  //         status: HomePageStatus.loaded,
-  //         errorMessage: "",
-  //         discountData: res.data!.values.first,
-  //       );
-  //     }
-  //     return;
-  //   } catch (e) {
-  //     state = state.copyWith(
-  //       status: HomePageStatus.error,
-  //       discountData: null,
-  //       categoryData: null,
-  //       trendingArtists: null,
-  //       featuredProducts: null,
-  //       errorMessage: e.toString(),
-  //     );
-  //   }
-  // }
 }
 
 @freezed
 class HomeTabPageState with _$HomeTabPageState {
   const factory HomeTabPageState({
     @Default('') String errorMessage,
+    @Default([]) List<InsurancePlanData> insuranceData,
+    @Default([]) List<InsuranceProviderData> insuranceProviders,
     @Default(HomePageStatus.initial) HomePageStatus status,
   }) = _HomeTabPageState;
 }

@@ -83,6 +83,7 @@ class _ActiveLoansTabPageState extends ConsumerState<ActiveLoansTabPage> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: PlanCard(
+                        premium: "",
                         isActiveLoan: true,
                         amount: (index + 1).toString(),
                         imageString:

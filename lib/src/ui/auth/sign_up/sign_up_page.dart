@@ -88,7 +88,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     height: 10,
                   ),
                   const Text(
-                    "Log In as loan provider",
+                    "Log In as service provider",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
@@ -100,7 +100,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     height: 15,
                   ),
                   CustomAuthTextField(
-                    hintText: 'Email/Phone Number',
+                    hintText: 'Email',
                     isEnabled: !isProcessing,
                     initialText: ref.read(
                         signUpPageModelProvider.select((value) => value.email)),
@@ -189,25 +189,26 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     borderColor: Colors.white.withOpacity(.6),
                     isProcessing: isProcessing,
                     onTap: () async {
-                      context.replaceRoute(const MainRoute());
-                      // if (!isProcessing) {
-                      //   if (mounted) {
-                      //     setState(() {
-                      //       isProcessing = true;
-                      //     });
-                      //   }
-                      //   // final res = await ref
-                      //   //     .read(signUpPageModelProvider.notifier)
-                      //   //     .loginUser(checkBox: checkBox);
-                      //   // if (res != '') {
-                      //   //   showErrorMessage(res);
-                      //   // }
-                      //   if (mounted) {
-                      //     setState(() {
-                      //       isProcessing = false;
-                      //     });
-                      //   }
-                      // }
+                      if (!isProcessing) {
+                        if (mounted) {
+                          setState(() {
+                            isProcessing = true;
+                          });
+                        }
+                        final data = ref.read(
+                            signUpPageModelProvider.select((value) => value));
+                        final res = await ref
+                            .read(authRepositoryProvider.notifier)
+                            .loginProvider(data.email, data.password);
+                        if (res != '') {
+                          showErrorMessage(res);
+                        }
+                        if (mounted) {
+                          setState(() {
+                            isProcessing = false;
+                          });
+                        }
+                      }
                     },
                     text: 'Continue',
                   ),
