@@ -27,8 +27,13 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(
-                  height: 200,
+                  height: 100,
                 ),
+                Image.asset(
+                  'assets/images/ic_logo.png',
+                  height: 250,
+                ),
+                const SizedBox(height: 30),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -55,21 +60,8 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                 const SizedBox(
                   height: 40,
                 ),
-                const Text(
-                  "",
-                  // textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: Fonts.helvtica,
-                    // color: Colors.white,
-                    fontSize: 19,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomAuthBtn(
                       height: 50,

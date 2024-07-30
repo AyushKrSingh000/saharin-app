@@ -1,9 +1,16 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+import 'package:saharin/src/constants/colors.dart';
 import 'package:saharin/src/ui/home_tab/home_tab_page_model.dart';
+import 'package:saharin/src/ui/home_tab/widgets/best_offer_card.dart';
+import 'package:saharin/src/ui/home_tab/widgets/featured_section.dart';
 import 'package:saharin/src/utils/toast_utils.dart';
 import 'package:saharin/src/widgets/custom_scaffold.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../constants/fonts.dart';
 
 @RoutePage()
 class HomeTabPage extends ConsumerStatefulWidget {
@@ -54,50 +61,106 @@ class _HomeTabPageState extends ConsumerState<HomeTabPage> {
           bgColor: Colors.white,
           child: RefreshIndicator(
             displacement: 60,
-            edgeOffset: 120,
+            edgeOffset: 40,
             onRefresh: () async {
               await ref.read(homeTabPageModelProvider.notifier).init();
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(22),
+                            color: primaryColor,
+                            border: Border.all(
+                              color: primaryColor,
+                              width: 2,
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: primaryColor,
+                              child: Image.asset('assets/images/ic_logo.png'),
+                            ),
+                          ),
+                        ),
+                        const Icon(
+                          CupertinoIcons.bell,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Hello, ",
+                          style: TextStyle(
+                            // color: primaryColor,
+                            fontSize: 22,
+                            fontFamily: Fonts.helvtica,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          "Pavan",
+                          style: TextStyle(
+                            // color: primaryColor,
+                            fontSize: 23,
+                            fontFamily: Fonts.helvtica,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "Welcome Back!",
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontSize: 14,
+                        fontFamily: Fonts.helvtica,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 22),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 15),
-                          SizedBox(height: 15),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-
-                  //  ...[
-                  //     TryAgainWidget(
-                  //       onTap: () {
-                  //         ref.read(homeTabPageModelProvider.notifier).init();
-                  //       },
-                  //       isProcessing: status == HomePageStatus.initial ||
-                  //           status == HomePageStatus.loading,
-                  //       errMessage: ref.watch(
-                  //         homeTabPageModelProvider.select(
-                  //           (value) => value.errorMessage.trim().isEmpty
-                  //               ? "Something Went Wrong!!!"
-                  //               : value.errorMessage.trim(),
-                  //         ),
-                  //       ),
-                  //     )
-                  // ]
-                ],
+                    const BestLaonCard(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const FeaturedPlansSection(),
+                    //  ...[
+                    //     TryAgainWidget(
+                    //       onTap: () {
+                    //         ref.read(homeTabPageModelProvider.notifier).init();
+                    //       },
+                    //       isProcessing: status == HomePageStatus.initial ||
+                    //           status == HomePageStatus.loading,
+                    //       errMessage: ref.watch(
+                    //         homeTabPageModelProvider.select(
+                    //           (value) => value.errorMessage.trim().isEmpty
+                    //               ? "Something Went Wrong!!!"
+                    //               : value.errorMessage.trim(),
+                    //         ),
+                    //       ),
+                    //     )
+                    // ]
+                  ],
+                ),
               ),
             ),
           )),

@@ -37,7 +37,7 @@ class _CustomButtonState extends ConsumerState<CustomButton> {
           border: widget.secondUI
               ? Border.all(color: primaryColor, width: 1)
               : null,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(5),
         ),
         height: widget.height,
         width: widget.width,
