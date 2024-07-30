@@ -27,6 +27,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeTabPage(),
       );
     },
+    InsuranceRoute.name: (routeData) {
+      final args = routeData.argsAs<InsuranceRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: InsurancePage(
+          key: args.key,
+          data: args.data,
+          index: args.index,
+        ),
+      );
+    },
     LoanRoute.name: (routeData) {
       final args = routeData.argsAs<LoanRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -121,6 +132,49 @@ class HomeTabRoute extends PageRouteInfo<void> {
   static const String name = 'HomeTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [InsurancePage]
+class InsuranceRoute extends PageRouteInfo<InsuranceRouteArgs> {
+  InsuranceRoute({
+    Key? key,
+    required InsurancePlanData data,
+    required int index,
+    List<PageRouteInfo>? children,
+  }) : super(
+          InsuranceRoute.name,
+          args: InsuranceRouteArgs(
+            key: key,
+            data: data,
+            index: index,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'InsuranceRoute';
+
+  static const PageInfo<InsuranceRouteArgs> page =
+      PageInfo<InsuranceRouteArgs>(name);
+}
+
+class InsuranceRouteArgs {
+  const InsuranceRouteArgs({
+    this.key,
+    required this.data,
+    required this.index,
+  });
+
+  final Key? key;
+
+  final InsurancePlanData data;
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'InsuranceRouteArgs{key: $key, data: $data, index: $index}';
+  }
 }
 
 /// generated route for

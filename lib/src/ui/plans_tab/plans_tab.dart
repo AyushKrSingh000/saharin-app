@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:saharin/src/routing/router.dart';
 import 'package:saharin/src/ui/home_tab/home_tab_page_model.dart';
 import 'package:saharin/src/widgets/plan_card.dart';
 import 'package:saharin/src/widgets/try_again_widget.dart';
@@ -97,6 +98,10 @@ class _PlansTabPageState extends ConsumerState<PlansTabPage> {
                         return Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: PlanCard(
+                              onTap: () {
+                                context.navigateTo(InsuranceRoute(
+                                    data: data[index], index: index));
+                              },
                               premium: data[index].premium.toString(),
                               amount: (index + 1).toString(),
                               imageString:

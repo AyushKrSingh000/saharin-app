@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../models/insurance_plan_data/insurance_plan_data.dart';
 import '../models/insurance_provider_data/insurance_provider_data.dart';
 import '../ui/active_loans_tab/active_loans_tab.dart';
 import '../ui/auth/sign_in/signin_page.dart';
@@ -10,6 +11,7 @@ import '../ui/auth/tnc/tnc_page.dart';
 
 import '../ui/auth/welcome/welcome_page.dart';
 import '../ui/home_tab/home_tab_page.dart';
+import '../ui/insurance_page/insurance_page.dart';
 import '../ui/loan_page/loan_page.dart';
 import '../ui/main/main_page.dart';
 import '../ui/plans_tab/plans_tab.dart';
@@ -76,6 +78,10 @@ class AppRouter extends _$AppRouter {
     ]),
     AutoRoute(
       page: LoanRoute.page,
+      path: '/loan',
+    ),
+    AutoRoute(
+      page: InsuranceRoute.page,
       path: '/loan',
     ),
   ];

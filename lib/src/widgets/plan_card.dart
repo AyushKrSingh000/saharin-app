@@ -8,83 +8,88 @@ class PlanCard extends ConsumerWidget {
   final String planName;
   final String amount;
   final String premium;
+  final VoidCallback onTap;
   const PlanCard({
     super.key,
     required this.premium,
     required this.amount,
     required this.imageString,
+    required this.onTap,
     required this.planName,
     this.isActiveLoan = false,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      color: Colors.grey.shade100,
-      height: 100,
-      child: Row(
-        children: [
-          const SizedBox(
-            width: 10,
-          ),
-          Image.asset(
-            imageString,
-            width: 80,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            flex: 3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  planName,
-                  maxLines: 2,
-                ),
-              ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        color: Colors.grey.shade100,
+        height: 100,
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 10,
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Cover amount",
-                  maxLines: 1,
-                ),
-                Text(
-                  "Rs. $amount lakh",
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w800,
+            Image.asset(
+              imageString,
+              width: 80,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              flex: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    planName,
+                    maxLines: 2,
                   ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CustomButton(
-                      width: 80,
-                      height: 30,
-                      text: ' Rs. $premium/mon ',
-                      onTap: () {},
-                      isProcessing: false,
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-        ],
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Cover amount",
+                    maxLines: 1,
+                  ),
+                  Text(
+                    "Rs. $amount lakh",
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CustomButton(
+                        width: 80,
+                        height: 30,
+                        text: ' Rs. $premium/mon ',
+                        onTap: onTap,
+                        isProcessing: false,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+          ],
+        ),
       ),
     );
   }
