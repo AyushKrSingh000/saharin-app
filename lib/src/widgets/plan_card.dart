@@ -72,7 +72,7 @@ class PlanCard extends ConsumerWidget {
                     CustomButton(
                       width: 80,
                       height: 30,
-                      text: '$premium/month',
+                      text: ' Rs. $premium/mon ',
                       onTap: () {},
                       isProcessing: false,
                     ),

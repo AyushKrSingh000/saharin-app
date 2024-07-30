@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:saharin/src/constants/colors.dart';
 import 'package:saharin/src/ui/home_tab/home_tab_page_model.dart';
 import 'package:saharin/src/ui/home_tab/widgets/best_offer_card.dart';
+import 'package:saharin/src/ui/home_tab/widgets/featured_loans_section.dart';
 import 'package:saharin/src/ui/home_tab/widgets/featured_section.dart';
 import 'package:saharin/src/utils/toast_utils.dart';
 import 'package:saharin/src/widgets/custom_scaffold.dart';
@@ -43,7 +44,8 @@ class _HomeTabPageState extends ConsumerState<HomeTabPage> {
     ref.listen(homeTabPageModelProvider, (prev, next) {});
     final status =
         ref.watch(homeTabPageModelProvider.select((value) => value.status));
-
+    final userData =
+        ref.watch(authRepositoryProvider.select((value) => value.authUser));
     return WillPopScope(
       onWillPop: () async {
         if (context.tabsRouter.activeIndex == 0) {
@@ -110,10 +112,10 @@ class _HomeTabPageState extends ConsumerState<HomeTabPage> {
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Hello, ",
                                     style: TextStyle(
                                       // color: primaryColor,
@@ -123,8 +125,8 @@ class _HomeTabPageState extends ConsumerState<HomeTabPage> {
                                     ),
                                   ),
                                   Text(
-                                    "Pavan",
-                                    style: TextStyle(
+                                    userData?.data.user.fullName ?? "User",
+                                    style: const TextStyle(
                                       // color: primaryColor,
                                       fontSize: 23,
                                       fontFamily: Fonts.helvtica,
@@ -150,6 +152,10 @@ class _HomeTabPageState extends ConsumerState<HomeTabPage> {
                                 height: 10,
                               ),
                               const FeaturedPlansSection(),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const FeaturedLoanSection(),
                             ]))))
             : TryAgainWidget(
                 onTap: () {

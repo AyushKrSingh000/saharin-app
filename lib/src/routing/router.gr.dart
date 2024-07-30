@@ -28,9 +28,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     LoanRoute.name: (routeData) {
+      final args = routeData.argsAs<LoanRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoanPage(),
+        child: LoanPage(
+          key: args.key,
+          data: args.data,
+          index: args.index,
+        ),
       );
     },
     MainRoute.name: (routeData) {
@@ -120,16 +125,44 @@ class HomeTabRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [LoanPage]
-class LoanRoute extends PageRouteInfo<void> {
-  const LoanRoute({List<PageRouteInfo>? children})
-      : super(
+class LoanRoute extends PageRouteInfo<LoanRouteArgs> {
+  LoanRoute({
+    Key? key,
+    required InsuranceProviderData data,
+    required int index,
+    List<PageRouteInfo>? children,
+  }) : super(
           LoanRoute.name,
+          args: LoanRouteArgs(
+            key: key,
+            data: data,
+            index: index,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'LoanRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<LoanRouteArgs> page = PageInfo<LoanRouteArgs>(name);
+}
+
+class LoanRouteArgs {
+  const LoanRouteArgs({
+    this.key,
+    required this.data,
+    required this.index,
+  });
+
+  final Key? key;
+
+  final InsuranceProviderData data;
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'LoanRouteArgs{key: $key, data: $data, index: $index}';
+  }
 }
 
 /// generated route for

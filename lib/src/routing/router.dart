@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../models/insurance_provider_data/insurance_provider_data.dart';
 import '../ui/active_loans_tab/active_loans_tab.dart';
 import '../ui/auth/sign_in/signin_page.dart';
 import '../ui/auth/sign_up/sign_up_page.dart';
@@ -72,10 +73,10 @@ class AppRouter extends _$AppRouter {
         page: ProfileTabeRoute.page,
         path: "profile",
       ),
-      AutoRoute(
-        page: LoanRoute.page,
-        path: 'loan',
-      ),
     ]),
+    AutoRoute(
+      page: LoanRoute.page,
+      path: '/loan',
+    ),
   ];
 }
