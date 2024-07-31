@@ -85,7 +85,7 @@ class SignUpPageModel extends StateNotifier<SignUpPageState> {
       } else {
         ref.read(authRepositoryProvider.notifier).setPass(state.password);
         ref.read(authRepositoryProvider.notifier).updateUser(res.data);
-        ref.read(authRepositoryProvider.notifier).setCheckBox(true);
+
         ref
             .read(authRepositoryProvider.notifier)
             .changeState(AuthStatus.authenticatedNotVerified);

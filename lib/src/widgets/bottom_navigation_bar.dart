@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:saharin/src/logic/repositories/auth_repository.dart';
 
 import '../constants/colors.dart';
 
@@ -20,6 +21,8 @@ class BottomBar extends ConsumerStatefulWidget {
 class _BottomBarState extends ConsumerState<BottomBar> {
   @override
   Widget build(BuildContext context) {
+    final checkbox =
+        ref.watch(authRepositoryProvider.select((value) => value.checkbox));
     return Container(
       color: const Color.fromRGBO(135, 225, 227, .24),
       child: Column(
@@ -52,51 +55,89 @@ class _BottomBarState extends ConsumerState<BottomBar> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _NavigationBarItem(
-                          label: 'Home',
-                          index: 0,
-                          icon: Icons.home,
-                          isActive: context.tabsRouter.activeIndex == 0,
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            context.tabsRouter.setActiveIndex(0);
+                      children: checkbox
+                          ? [
+                              _NavigationBarItem(
+                                label: 'Loan',
+                                index: 0,
+                                icon: Icons.flag_outlined,
+                                isActive: context.tabsRouter.activeIndex == 0,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  context.tabsRouter.setActiveIndex(0);
 
-                            setState(() {});
-                          },
-                        ),
-                        _NavigationBarItem(
-                          label: 'Plans',
-                          index: 2,
-                          icon: Icons.policy_outlined,
-                          isActive: context.tabsRouter.activeIndex == 2,
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            context.tabsRouter.setActiveIndex(2);
-                          },
-                        ),
-                        _NavigationBarItem(
-                          label: 'Loans',
-                          icon: Icons.flag_outlined,
-                          index: 1,
-                          isActive: context.tabsRouter.activeIndex == 1,
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            context.tabsRouter.setActiveIndex(1);
-                          },
-                        ),
-                        _NavigationBarItem(
-                          label: 'Profile',
-                          index: 3,
-                          icon: Icons.person_outline,
-                          isActive: context.tabsRouter.activeIndex == 3,
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
+                                  setState(() {});
+                                },
+                              ),
+                              _NavigationBarItem(
+                                label: 'Insurance',
+                                index: 1,
+                                icon: Icons.money_outlined,
+                                isActive: context.tabsRouter.activeIndex == 1,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  context.tabsRouter.setActiveIndex(1);
 
-                            context.tabsRouter.setActiveIndex(3);
-                          },
-                        ),
-                      ],
+                                  // setState(() {});
+                                },
+                              ),
+                              _NavigationBarItem(
+                                label: 'Profile',
+                                index: 2,
+                                icon: Icons.person_outline,
+                                isActive: context.tabsRouter.activeIndex == 2,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+
+                                  context.tabsRouter.setActiveIndex(2);
+                                },
+                              ),
+                            ]
+                          : [
+                              _NavigationBarItem(
+                                label: 'Home',
+                                index: 0,
+                                icon: Icons.home,
+                                isActive: context.tabsRouter.activeIndex == 0,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  context.tabsRouter.setActiveIndex(0);
+
+                                  setState(() {});
+                                },
+                              ),
+                              _NavigationBarItem(
+                                label: 'Plans',
+                                index: 2,
+                                icon: Icons.policy_outlined,
+                                isActive: context.tabsRouter.activeIndex == 2,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  context.tabsRouter.setActiveIndex(2);
+                                },
+                              ),
+                              _NavigationBarItem(
+                                label: 'Loans',
+                                icon: Icons.flag_outlined,
+                                index: 1,
+                                isActive: context.tabsRouter.activeIndex == 1,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  context.tabsRouter.setActiveIndex(1);
+                                },
+                              ),
+                              _NavigationBarItem(
+                                label: 'Profile',
+                                index: 3,
+                                icon: Icons.person_outline,
+                                isActive: context.tabsRouter.activeIndex == 3,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+
+                                  context.tabsRouter.setActiveIndex(3);
+                                },
+                              ),
+                            ],
                     ),
                   ),
                 ),

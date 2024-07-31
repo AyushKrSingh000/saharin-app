@@ -73,6 +73,7 @@ class AuthRepository extends StateNotifier<AuthState> {
           state = state.copyWith(
             authUser: res.data,
             idToken: res.data!.token,
+            checkbox: false,
             status: AuthStatus.authenticated,
           );
         }
@@ -103,7 +104,12 @@ class AuthRepository extends StateNotifier<AuthState> {
         return res.errorMessage ?? "Something Went Wrong";
       } else {
         if (mounted) {
-          state = state.copyWith(authUser: res.data, idToken: res.data!.token);
+          state = state.copyWith(
+            authUser: res.data,
+            idToken: res.data!.token,
+            checkbox: true,
+          );
+          print(res.data?.token);
           changeState(AuthStatus.authenticated);
         }
       }
@@ -136,7 +142,7 @@ class AuthRepository extends StateNotifier<AuthState> {
 
   setEmail(String email) => state = state.copyWith(email: email);
   setPass(String pass) => state = state.copyWith(password: pass);
-  setCheckBox(bool checkbox) => state = state.copyWith(checkbox: checkbox);
+  setProvider(bool checkbox) => state = state.copyWith(checkbox: checkbox);
   changeState(AuthStatus authStatus) {
     state = state.copyWith(status: authStatus);
   }

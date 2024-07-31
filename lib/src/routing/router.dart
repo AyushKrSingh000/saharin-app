@@ -16,6 +16,8 @@ import '../ui/loan_page/loan_page.dart';
 import '../ui/main/main_page.dart';
 import '../ui/plans_tab/plans_tab.dart';
 import '../ui/profile_tab/profile_tab.dart';
+import '../ui/provider/provider_home_tab/provider_home_tab.dart';
+import '../ui/provider/provider_insurance_tab/provider_insurance_tab.dart';
 import '../ui/splash/splash_page.dart';
 
 part 'router.gr.dart';
@@ -74,6 +76,14 @@ class AppRouter extends _$AppRouter {
       AutoRoute(
         page: ProfileTabeRoute.page,
         path: "profile",
+      ),
+      AutoRoute(
+        page: ProvderInsuranceTabRoute.page,
+        path: "provider_insurance",
+      ),
+      AutoRoute(
+        page: ProviderHomeTabeRoute.page,
+        path: "provider_loan_tab",
       ),
     ]),
     AutoRoute(

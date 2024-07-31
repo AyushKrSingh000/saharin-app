@@ -161,9 +161,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                 setState(() {
                                   checkBox = !checkBox;
                                 });
-                                ref
-                                    .read(authRepositoryProvider.notifier)
-                                    .setCheckBox(checkBox);
                               }
                             },
                           ),

@@ -2,8 +2,11 @@
 
 // 🌎 Project imports:
 
+// ignore_for_file: unused_import
+
 import 'package:saharin/src/models/insurance_plan_data/insurance_plan_data.dart';
 import 'package:saharin/src/models/insurance_provider_data/insurance_provider_data.dart';
+import 'package:saharin/src/models/insurance_requests_data/insurance_requests_data.dart';
 import 'package:saharin/src/models/requests/send_email_otp_request.dart';
 import 'package:saharin/src/models/requests/user_login_request.dart';
 import 'package:saharin/src/models/requests/user_logout_request.dart';
@@ -12,6 +15,7 @@ import 'package:saharin/src/models/user_register_data.dart';
 import 'package:dio/dio.dart';
 
 import '../../../models/api_response.dart';
+import '../../../models/loan_request_data/loan_request_data.dart';
 import '../../../models/requests/social_login_request.dart';
 import '../../../utils/network_utils.dart';
 import 'api_service.dart';
@@ -154,56 +158,48 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<ApiResponse<UserData>> socialLogin({
-    required SocialLoginRequest socialLoginRequest,
+  Future<ApiResponse<List<InsuranceRequestsData>>> getInsuranceRequests({
+    required String token,
   }) async {
     try {
-      final response = await _authApiClient.soicalLogin(
-        socialLoginRequest: socialLoginRequest,
+      final response = await _authApiClient.getInsuranceRequests(
+        token: 'Bearer $token',
       ) as Map<String, dynamic>;
 
-      if (response['status'] == false) {
-        return ApiResponse<UserData>.error(
-            response['message'] ?? "Something Went Wrong!");
-      }
-
-      return ApiResponse<UserData>.success(UserData.fromJson(response['data']));
-    } on DioException catch (e) {
-      final hasInternet = await hasInternetAccess();
-      if (!hasInternet) {
-        return ApiResponse<UserData>.noInternet();
-      }
-      if (e.response?.data['message'].runtimeType.toString() ==
-          "_Map<String, dynamic>") {
-        return ApiResponse.error("Server did not respond. Try Again!!!");
-      }
-      return ApiResponse<UserData>.error(
-          e.response?.data['message'] ?? "Something Went Wrong");
-    }
-  }
-
-  @override
-  Future<ApiResponse<String>> sendForgotPassOtp({
-    required SendEmailOtpRequest sendEmailOtpRequest,
-  }) async {
-    try {
-      final response = await _authApiClient.sendChangePassOtp(
-          sendEmailOtpRequest: sendEmailOtpRequest) as Map<String, dynamic>;
-      if (response['status'] == false) {
-        return ApiResponse.error(
-            response['message'] ?? "Something Went Wrong!");
-      } else if (response['status'] == true) {
-        return ApiResponse.success(response['message'] ?? "");
-      } else {
-        return ApiResponse.error('Something Went Wrong');
-      }
+      return ApiResponse<List<InsuranceRequestsData>>.success(
+          (response['insuranceRequests'] as List)
+              .map((e) => InsuranceRequestsData.fromJson(e))
+              .toList());
     } on DioException catch (e) {
       final hasInternet = await hasInternetAccess();
       if (!hasInternet) {
         return ApiResponse.noInternet();
       }
-      return ApiResponse.error(
-          e.response?.data['message'] ?? "Sonmething Went Wrong!!!");
+      print(e.response?.data.toString());
+      return ApiResponse.error("Something Went Wrong");
+    }
+  }
+
+  @override
+  Future<ApiResponse<List<LoanRequestData>>> getloanRequests({
+    required String token,
+  }) async {
+    try {
+      final response = await _authApiClient.getLoanRequests(
+        token: 'Bearer $token',
+      ) as Map<String, dynamic>;
+
+      return ApiResponse<List<LoanRequestData>>.success(
+          (response['loanRequests'] as List)
+              .map((e) => LoanRequestData.fromJson(e))
+              .toList());
+    } on DioException catch (e) {
+      final hasInternet = await hasInternetAccess();
+      if (!hasInternet) {
+        return ApiResponse.noInternet();
+      }
+      print(e.response?.data.toString());
+      return ApiResponse.error("Something Went Wrong");
     }
   }
 

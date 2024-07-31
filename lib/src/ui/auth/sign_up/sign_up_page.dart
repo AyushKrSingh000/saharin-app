@@ -219,7 +219,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "Are you a loan seeker?",
+                        "Are you a community ? ",
                         style: TextStyle(
                           fontFamily: Fonts.helvtica,
                           color: Colors.black,

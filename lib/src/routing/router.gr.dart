@@ -73,6 +73,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileTabePage(),
       );
     },
+    ProvderInsuranceTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProvderInsuranceTabPage(),
+      );
+    },
+    ProviderHomeTabeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProviderHomeTabePage(),
+      );
+    },
     SignInRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -271,6 +283,34 @@ class ProfileTabeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileTabeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProvderInsuranceTabPage]
+class ProvderInsuranceTabRoute extends PageRouteInfo<void> {
+  const ProvderInsuranceTabRoute({List<PageRouteInfo>? children})
+      : super(
+          ProvderInsuranceTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProvderInsuranceTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProviderHomeTabePage]
+class ProviderHomeTabeRoute extends PageRouteInfo<void> {
+  const ProviderHomeTabeRoute({List<PageRouteInfo>? children})
+      : super(
+          ProviderHomeTabeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProviderHomeTabeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
