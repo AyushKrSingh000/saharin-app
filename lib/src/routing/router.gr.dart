@@ -38,11 +38,33 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    InsuranceRequestRoute.name: (routeData) {
+      final args = routeData.argsAs<InsuranceRequestRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: InsuranceRequestPage(
+          key: args.key,
+          data: args.data,
+          index: args.index,
+        ),
+      );
+    },
     LoanRoute.name: (routeData) {
       final args = routeData.argsAs<LoanRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: LoanPage(
+          key: args.key,
+          data: args.data,
+          index: args.index,
+        ),
+      );
+    },
+    LoanRequestRoute.name: (routeData) {
+      final args = routeData.argsAs<LoanRequestRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: LoanRequestPage(
           key: args.key,
           data: args.data,
           index: args.index,
@@ -190,6 +212,49 @@ class InsuranceRouteArgs {
 }
 
 /// generated route for
+/// [InsuranceRequestPage]
+class InsuranceRequestRoute extends PageRouteInfo<InsuranceRequestRouteArgs> {
+  InsuranceRequestRoute({
+    Key? key,
+    required InsuranceRequestsData data,
+    required int index,
+    List<PageRouteInfo>? children,
+  }) : super(
+          InsuranceRequestRoute.name,
+          args: InsuranceRequestRouteArgs(
+            key: key,
+            data: data,
+            index: index,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'InsuranceRequestRoute';
+
+  static const PageInfo<InsuranceRequestRouteArgs> page =
+      PageInfo<InsuranceRequestRouteArgs>(name);
+}
+
+class InsuranceRequestRouteArgs {
+  const InsuranceRequestRouteArgs({
+    this.key,
+    required this.data,
+    required this.index,
+  });
+
+  final Key? key;
+
+  final InsuranceRequestsData data;
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'InsuranceRequestRouteArgs{key: $key, data: $data, index: $index}';
+  }
+}
+
+/// generated route for
 /// [LoanPage]
 class LoanRoute extends PageRouteInfo<LoanRouteArgs> {
   LoanRoute({
@@ -228,6 +293,49 @@ class LoanRouteArgs {
   @override
   String toString() {
     return 'LoanRouteArgs{key: $key, data: $data, index: $index}';
+  }
+}
+
+/// generated route for
+/// [LoanRequestPage]
+class LoanRequestRoute extends PageRouteInfo<LoanRequestRouteArgs> {
+  LoanRequestRoute({
+    Key? key,
+    required LoanRequestData data,
+    required int index,
+    List<PageRouteInfo>? children,
+  }) : super(
+          LoanRequestRoute.name,
+          args: LoanRequestRouteArgs(
+            key: key,
+            data: data,
+            index: index,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'LoanRequestRoute';
+
+  static const PageInfo<LoanRequestRouteArgs> page =
+      PageInfo<LoanRequestRouteArgs>(name);
+}
+
+class LoanRequestRouteArgs {
+  const LoanRequestRouteArgs({
+    this.key,
+    required this.data,
+    required this.index,
+  });
+
+  final Key? key;
+
+  final LoanRequestData data;
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'LoanRequestRouteArgs{key: $key, data: $data, index: $index}';
   }
 }
 

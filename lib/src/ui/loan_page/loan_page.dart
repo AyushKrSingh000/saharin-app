@@ -46,7 +46,7 @@ class _LoanPageState extends ConsumerState<LoanPage> {
           "Dependents": 1,
           "Education": 1,
           "Self_Employed": 0,
-          "ApplicantIncome": ((widget.index) % 4 + 3) * 430,
+          "ApplicantIncome": ((widget.index) % 4 + 3) * 4300,
           "CoapplicantIncome": 158.0,
           "Loan_Amount_Term": 365.0,
           "SHG_ID": 1
@@ -126,11 +126,14 @@ class _LoanPageState extends ConsumerState<LoanPage> {
               ),
               Column(
                 children: [
-                  Image.asset(
-                    'assets/images/ic_plan1.png',
-                    height: 150,
-                    width: 250,
-                    fit: BoxFit.fill,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(300),
+                    child: Image.asset(
+                      'assets/images/ic_plan1.png',
+                      height: 200,
+                      width: 200,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   const SizedBox(
                     height: 30,
@@ -146,7 +149,7 @@ class _LoanPageState extends ConsumerState<LoanPage> {
                     height: 40,
                   ),
                   Text(
-                    "Get Loan Upto Rs. ${(amount * 1000).toStringAsFixed(2)}/- for 1 years",
+                    "Get Loan Upto Rs. ${(amount * 100).toStringAsFixed(2)}/- for 1 years",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -158,8 +161,10 @@ class _LoanPageState extends ConsumerState<LoanPage> {
                 height: 50,
               ),
               CustomAuthTextField(
-                  hintText: 'Enter the amount you want to take loan',
-                  initialText: amountHeWant.toString(),
+                  hintText: 'Enter the loan amount',
+                  initialText: amountHeWant.toString() == '0.0'
+                      ? ""
+                      : amountHeWant.toString(),
                   isDigitOnly: true,
                   maxLength: null,
                   onChanged: (value) {
@@ -167,6 +172,15 @@ class _LoanPageState extends ConsumerState<LoanPage> {
                             value.trim().isEmpty ? "0" : value.trim()) ??
                         0;
                   }),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomAuthTextField(
+                  hintText: 'Enter the requested interest rate',
+                  initialText: '',
+                  isDigitOnly: true,
+                  maxLength: null,
+                  onChanged: (value) {}),
               const SizedBox(
                 height: 30,
               ),

@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:saharin/src/routing/router.dart';
 import 'package:saharin/src/ui/provider/provider_home_tab/provider_home_tab_model.dart';
 
 import '../../../../constants/fonts.dart';
@@ -43,7 +45,12 @@ class _FeaturedPlansSectionState extends ConsumerState<LoanRequestsSection> {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: LoanRequestsCard(
                       status: loans[index].status,
-                      onTap: () {},
+                      onTap: () {
+                        context.navigateTo(LoanRequestRoute(
+                          data: loans[index],
+                          index: index,
+                        ));
+                      },
                       imageString: 'assets/images/ic_logo.png',
                       planName: loans[index].selfHelpGroup,
                     ),

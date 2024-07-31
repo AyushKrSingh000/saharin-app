@@ -97,8 +97,8 @@ class _LoanPageState extends ConsumerState<InsurancePage> {
               children: [
                 Image.asset(
                   'assets/images/ic_plan1.png',
-                  height: 150,
-                  width: 250,
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.fill,
                 ),
                 const SizedBox(

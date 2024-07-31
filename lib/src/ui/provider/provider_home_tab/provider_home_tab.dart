@@ -10,7 +10,6 @@ import '../../../constants/colors.dart';
 import '../../../logic/repositories/auth_repository.dart';
 import '../../../routing/router.dart';
 import '../../../utils/toast_utils.dart';
-import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/try_again_widget.dart';
 
 @RoutePage()

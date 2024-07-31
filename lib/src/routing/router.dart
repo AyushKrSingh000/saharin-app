@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../models/insurance_plan_data/insurance_plan_data.dart';
 import '../models/insurance_provider_data/insurance_provider_data.dart';
+import '../models/insurance_requests_data/insurance_requests_data.dart';
+import '../models/loan_request_data/loan_request_data.dart';
 import '../ui/active_loans_tab/active_loans_tab.dart';
 import '../ui/auth/sign_in/signin_page.dart';
 import '../ui/auth/sign_up/sign_up_page.dart';
@@ -12,7 +14,9 @@ import '../ui/auth/tnc/tnc_page.dart';
 import '../ui/auth/welcome/welcome_page.dart';
 import '../ui/home_tab/home_tab_page.dart';
 import '../ui/insurance_page/insurance_page.dart';
+import '../ui/insurance_request/insurance_request_page.dart';
 import '../ui/loan_page/loan_page.dart';
+import '../ui/loan_request/loan_request_page.dart';
 import '../ui/main/main_page.dart';
 import '../ui/plans_tab/plans_tab.dart';
 import '../ui/profile_tab/profile_tab.dart';
@@ -92,7 +96,15 @@ class AppRouter extends _$AppRouter {
     ),
     AutoRoute(
       page: InsuranceRoute.page,
-      path: '/loan',
+      path: '/insurance',
+    ),
+    AutoRoute(
+      page: LoanRequestRoute.page,
+      path: '/loan_request',
+    ),
+    AutoRoute(
+      page: InsuranceRequestRoute.page,
+      path: '/insurance_request',
     ),
   ];
 }

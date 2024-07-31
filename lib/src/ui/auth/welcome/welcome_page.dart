@@ -31,7 +31,7 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                 ),
                 Image.asset(
                   'assets/images/ic_logo.png',
-                  height: 250,
+                  height: 280,
                 ),
                 const SizedBox(height: 30),
                 const Row(
@@ -64,7 +64,7 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomAuthBtn(
-                      height: 50,
+                      height: 40,
                       isProcessing: false,
                       onTap: () {
                         context.replaceRoute(const SignInRoute());

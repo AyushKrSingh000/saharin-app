@@ -1,10 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:saharin/src/routing/router.dart';
 import 'package:saharin/src/ui/provider/provider_home_tab/provider_home_tab_model.dart';
 
 import '../../../constants/fonts.dart';
 import '../../../widgets/insuarance_request_card.dart';
-import '../../../widgets/loan_requests_card.dart';
 
 class InsuranceRequestsSection extends ConsumerStatefulWidget {
   const InsuranceRequestsSection({super.key});
@@ -45,7 +46,12 @@ class _FeaturedPlansSectionState
                     padding: const EdgeInsets.only(bottom: 10),
                     child: InsuranceRequestsCard(
                       status: loans[index].status,
-                      onTap: () {},
+                      onTap: () {
+                        context.navigateTo(InsuranceRequestRoute(
+                          data: loans[index],
+                          index: index,
+                        ));
+                      },
                       imageString: 'assets/images/ic_logo.png',
                       shgId: loans[index].selfHelpGroup,
                     ),

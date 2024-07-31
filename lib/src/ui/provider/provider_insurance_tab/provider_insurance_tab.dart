@@ -7,7 +7,7 @@ import 'package:saharin/src/ui/provider/provider_insurance_tab/insurnace_request
 import '../../../constants/colors.dart';
 import '../../../constants/fonts.dart';
 import '../../../logic/repositories/auth_repository.dart';
-import '../../../widgets/custom_scaffold.dart';
+
 import '../../../widgets/try_again_widget.dart';
 import '../provider_home_tab/provider_home_tab_model.dart';
 
@@ -42,10 +42,10 @@ class _ProvderInsuranceTabPageState
       },
       child: SafeArea(
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.add),
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {},
+          //   child: const Icon(Icons.add),
+          // ),
           body: status == ProviderHomePageStatus.loaded
               ? RefreshIndicator(
                   displacement: 60,
