@@ -6,22 +6,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/fonts.dart';
+import '../../../logic/repositories/auth_repository.dart';
 
 class ProfileImageNameSection extends ConsumerWidget {
   const ProfileImageNameSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Row(
+    final userData =
+        ref.watch(authRepositoryProvider.select((value) => value.authUser));
+    return Row(
       children: [
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hey, Pavan',
+                'Hey, ${userData?.data.user.fullName ?? "Aditya"}',
                 maxLines: 1,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   height: 2,
                   fontWeight: FontWeight.w400,
@@ -29,7 +32,7 @@ class ProfileImageNameSection extends ConsumerWidget {
                 ),
               ),
               Text(
-                "Logged in via ayushkumarsingh0708@gmail.com",
+                "Logged in via ${userData?.data.user.email ?? "email"}",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(

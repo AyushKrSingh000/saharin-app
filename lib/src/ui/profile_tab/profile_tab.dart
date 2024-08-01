@@ -50,19 +50,6 @@ class _ProfileTabePageState extends ConsumerState<ProfileTabePage> {
               ),
               const SizedBox(height: 20),
               const ProfileContainer(
-                subtitle: 'Edit your home address',
-                title: 'Your Address',
-                icon: Icons.location_on_outlined,
-              ),
-              const SizedBox(height: 20),
-              const ProfileContainer(
-                subtitle:
-                    'Check your order status (track, return, cancel, etc)',
-                title: 'My Orders',
-                icon: Icons.shopping_bag_outlined,
-              ),
-              const SizedBox(height: 20),
-              const ProfileContainer(
                 subtitle: 'Check your pending loans status',
                 title: 'Laon Status',
                 icon: Icons.account_balance_wallet_outlined,

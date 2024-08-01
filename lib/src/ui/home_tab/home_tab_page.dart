@@ -125,7 +125,7 @@ class _HomeTabPageState extends ConsumerState<HomeTabPage> {
                                     ),
                                   ),
                                   Text(
-                                    userData?.data.user.fullName ?? "User",
+                                    userData?.data.user.fullName ?? "Aditya",
                                     style: const TextStyle(
                                       // color: primaryColor,
                                       fontSize: 23,
